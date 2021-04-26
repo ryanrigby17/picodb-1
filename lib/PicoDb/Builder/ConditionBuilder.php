@@ -178,8 +178,12 @@ class ConditionBuilder
      */
     public function eq($column, $value)
     {
-        $this->addCondition($this->db->escapeIdentifier($column).' = ?');
-        $this->values[] = $value;
+        if (is_null($value)) {
+            $this->isNull($column);
+        } else {
+            $this->addCondition($this->db->escapeIdentifier($column).' = ?');
+            $this->values[] = $value;
+        }
     }
 
     /**
